@@ -1,0 +1,36 @@
+#Importation
+import findspark
+
+ 
+
+findspark.init("C:\SPARK")
+
+ 
+
+from pyspark import SparkContext
+
+ 
+
+from pyspark import SparkConf
+
+ 
+
+#Entry point API
+conf = SparkConf().setAppName("wordCount").setMaster("local")
+sc = SparkContext(conf=conf)
+
+ 
+
+texte = sc.textFile("C:\Spark\spark\bin\sample.txt")
+print(texte.collect())
+
+ 
+
+counts = texte.flatMap(lambda line:line.split(" "))
+b = counts.map(lambda word:(word,1))
+c = b.reduceByKey(lambda a,b:a+b)
+    
+    
+comptage = counts.collect()
+for x in comptage:
+    print (x)
